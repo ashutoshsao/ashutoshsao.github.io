@@ -5,6 +5,11 @@ body {
     font-size: 1em;
 }
 
+.code,
+code {
+    font-size: 1em;
+}
+
 h1 {
     font-size: 2em;
 }

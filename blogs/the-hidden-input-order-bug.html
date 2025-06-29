@@ -103,7 +103,6 @@ figure {
 
 figcaption {
 	opacity: 0.5;
-	font-size: 85%;
 	margin-top: 0.5em;
 }
 
@@ -420,7 +419,6 @@ code {
 	border-radius: 3px;
 	padding: 0.2em 0.4em;
 	border-radius: 3px;
-	font-size: 85%;
 	tab-size: 2;
 }
 
@@ -696,7 +694,7 @@ blockquote {
 }
 	
 </style></head><body><article id="20a66795-028d-8070-9184-c4b8bc2d6ff1" class="page sans"><header>
-</header><div class="page-body"><p><span style="font-size: 1.1em; color: #666666;">Jun 6 2025</span></p><h1 id="20a66795-028d-8095-a610-f90c111a1f31" class="">The Hidden Input Order Bug: A Competitive Programming Pitfall</h1><h2 id="20a66795-028d-808d-b540-c1682d242939" class="">The Problem</h2><p id="20a66795-028d-8084-b857-e829ea570b1a" class="">While solving the &quot;Maximum Gap&quot; problem, I encountered a frustrating situation where my algorithm was theoretically correct but failed the first test case. The issue wasn&#x27;t in my bucket sort logic or mathematical calculations—it was a subtle input handling bug that&#x27;s surprisingly common in competitive programming.</p><h2 id="20a66795-028d-8020-adaa-c036b99d9578" class="">The Bug</h2><p id="20a66795-028d-8008-bcba-e08dae156bbf" class="">In my original code, I had this structure:</p><pre id="20a66795-028d-80c0-a229-c1eebe3931bc" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">int n;
+</header><div class="page-body"><p><span style="font-size: 1.1em; color: #666666;">Jun 6 2025</span></p><h1 id="20a66795-028d-8095-a610-f90c111a1f31" class="">The Hidden Input Order Bug: A Competitive Programming Pitfall</h1><h2 id="20a66795-028d-808d-b540-c1682d242939" class="">The Problem</h2><p id="20a66795-028d-8084-b857-e829ea570b1a" class="">While solving the &quot;Maximum Gap&quot; problem, I encountered a frustrating situation where my algorithm was theoretically correct but failed the first test case. The issue wasn&#x27;t in my bucket sort logic or mathematical calculations—it was a subtle input handling bug that&#x27;s surprisingly common in competitive programming.</p><h2 id="20a66795-028d-8020-adaa-c036b99d9578" class="">The Bug</h2><p id="20a66795-028d-8008-bcba-e08dae156bbf" class="">In my original code, I had this structure:</p><pre id="20a66795-028d-80c0-a229-c1eebe3931bc" class="code"><code class="language-cpp">int n;
 cin &gt;&gt; n;
 
 if (n &lt; 2) {
@@ -708,7 +706,7 @@ vector&lt;int&gt; nums(n);
 for (int i = 0; i &lt; n; ++i) {
     cin &gt;&gt; nums[i];  // This line never executes when n &lt; 2
 }
-</code></pre><h2 id="20a66795-028d-802e-8a29-db28f7955d42" class="">What Went Wrong</h2><p id="20a66795-028d-80a4-a2bb-f3a25fd1d089" class="">When <code>n &lt; 2</code>, my code would:</p><ol type="1" id="20a66795-028d-80f0-ad26-dcf81e15c4f3" class="numbered-list" start="1"><li>Read the array size <code>n</code></li></ol><ol type="1" id="20a66795-028d-805b-afee-f107fa6de1d2" class="numbered-list" start="2"><li>Immediately print <code>0</code> and <code>continue</code> to the next test case</li></ol><ol type="1" id="20a66795-028d-80d4-909e-c1973e3f3037" class="numbered-list" start="3"><li><strong>Never read the actual array elements from input</strong></li></ol><p id="20a66795-028d-805f-a393-ce1a375fbb36" class="">This created a cascading effect where:</p><ul id="20a66795-028d-80ed-8a2f-d42aa9177d0a" class="bulleted-list"><li style="list-style-type:disc">The unread elements from the skipped test case remained in the input buffer</li></ul><ul id="20a66795-028d-8032-93ab-e3d69ee3af7f" class="bulleted-list"><li style="list-style-type:disc">These leftover elements were interpreted as input for the next test case</li></ul><ul id="20a66795-028d-80c5-838d-f260dce9a37a" class="bulleted-list"><li style="list-style-type:disc">All subsequent test cases received corrupted input</li></ul><h2 id="20a66795-028d-80de-872d-c494eca1f486" class="">The Fix</h2><p id="20a66795-028d-8052-acd7-d9742ce534aa" class="">The working solution correctly handles input order:</p><pre id="20a66795-028d-8059-b097-e94e5898e8f1" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">int n;
+</code></pre><h2 id="20a66795-028d-802e-8a29-db28f7955d42" class="">What Went Wrong</h2><p id="20a66795-028d-80a4-a2bb-f3a25fd1d089" class="">When <code>n &lt; 2</code>, my code would:</p><ol type="1" id="20a66795-028d-80f0-ad26-dcf81e15c4f3" class="numbered-list" start="1"><li>Read the array size <code>n</code></li></ol><ol type="1" id="20a66795-028d-805b-afee-f107fa6de1d2" class="numbered-list" start="2"><li>Immediately print <code>0</code> and <code>continue</code> to the next test case</li></ol><ol type="1" id="20a66795-028d-80d4-909e-c1973e3f3037" class="numbered-list" start="3"><li><strong>Never read the actual array elements from input</strong></li></ol><p id="20a66795-028d-805f-a393-ce1a375fbb36" class="">This created a cascading effect where:</p><ul id="20a66795-028d-80ed-8a2f-d42aa9177d0a" class="bulleted-list"><li style="list-style-type:disc">The unread elements from the skipped test case remained in the input buffer</li></ul><ul id="20a66795-028d-8032-93ab-e3d69ee3af7f" class="bulleted-list"><li style="list-style-type:disc">These leftover elements were interpreted as input for the next test case</li></ul><ul id="20a66795-028d-80c5-838d-f260dce9a37a" class="bulleted-list"><li style="list-style-type:disc">All subsequent test cases received corrupted input</li></ul><h2 id="20a66795-028d-80de-872d-c494eca1f486" class="">The Fix</h2><p id="20a66795-028d-8052-acd7-d9742ce534aa" class="">The working solution correctly handles input order:</p><pre id="20a66795-028d-8059-b097-e94e5898e8f1" class="code"><code class="language-cpp">int n;
 cin &gt;&gt; n;
 
 vector&lt;int&gt; v(n);
