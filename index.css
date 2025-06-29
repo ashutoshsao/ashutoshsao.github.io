@@ -38,3 +38,24 @@ a:hover {
 	color:#400000;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.blog-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.blog-meta {
+  color: #888;
+  font-size: 0.9em;
+  white-space: nowrap;
+  margin-left: 2em;
+}
