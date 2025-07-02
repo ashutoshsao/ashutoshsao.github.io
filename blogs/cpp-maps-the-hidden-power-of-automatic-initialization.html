@@ -17,15 +17,10 @@ body {
 @media only screen {
 	body {
 		margin: 2em auto;
-		max-width: 56.25em;
+		max-width: 900px;
+		padding: 1em;
 		color: rgb(55, 53, 47);
 	}
-@media only screen and (max-width: 600px) {
-	body {
-		margin: 2em 1em;
-		max-width: none;
-	}
-}
 }
 
 body {
@@ -426,6 +421,8 @@ code {
 	padding: 0.2em 0.4em;
 	border-radius: 3px;
 	tab-size: 2;
+	white-space: pre-wrap;
+	word-break: break-all;
 }
 
 code {
@@ -702,7 +699,7 @@ blockquote {
 </style></head><body><article id="20c66795-028d-8087-8c76-e10d9a55704c" class="page sans"><header>
 </header><div class="page-body"><p><span style="font-size: 1.1em; color: #666666;">Jun 8 2025</span></p><h1 id="20c66795-028d-8090-b237-db61fdea9f4f" class="">C++ Maps: The Hidden Power of Automatic Initialization in Permutation Problems</h1><p id="20c66795-028d-802c-925a-cfde0264b840" class=""><em>Discovering elegant solutions through automatic value initialization</em></p><h2 id="20c66795-028d-807a-9830-c7628a2b139c" class="">The &quot;Aha!&quot; Moment</h2><p id="20c66795-028d-80c5-9d56-f2444e50570c" class="">While solving the <strong>permutation substring search problem</strong>, I discovered a C++ feature that completely changed how I approach frequency counting. It&#x27;s not just about solving the problem—it&#x27;s about writing cleaner, more intuitive code.</p><h2 id="20c66795-028d-80e1-836c-df5bc797e820" class="">The Problem: Finding Permutation Substrings</h2><p id="20c66795-028d-809e-8fcf-e7e68f596070" class="">Given a string <code>s</code> and a pattern <code>p</code>, find all starting indices where substrings of <code>s</code> are anagrams of <code>p</code>.</p><p id="20c66795-028d-80af-8290-ea63d94f33f3" class=""><strong>Example:</strong></p><pre id="20c66795-028d-80d6-8fdf-e2dd19a5d9b0" class="code"><code class="language-text">s = "abab", p = "ab"
 Output: [0, 2]  // "ab" at index 0, "ba" at index 2
-</code></pre><h2 id="20c66795-028d-80dc-b38c-f25a3fd4a7b5" class="">The Traditional Approach (The Painful Way)</h2><pre id="20c66795-028d-808e-9abe-f628b6c4d8d8" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">vector&lt;int&gt; findAnagrams(string s, string p) {
+</code></pre><h2 id="20c66795-028d-80dc-b38c-f25a3fd4a7b5" class="">The Traditional Approach (The Painful Way)</h2><pre id="20c66795-028d-808e-9abe-f628b6c4d8d8" class="code"><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
     vector&lt;int&gt; result;
     unordered_map&lt;char, int&gt; pCount, windowCount;
 
@@ -719,9 +716,9 @@ Output: [0, 2]  // "ab" at index 0, "ba" at index 2
 
     return result;
 }
-</code></pre><p id="20c66795-028d-80c0-b39b-e5986e7e592d" class=""><strong>Problems:</strong> Verbose, repetitive, easy to introduce bugs.</p><h2 id="20c66795-028d-8080-adcb-f2cc76d9e90f" class="">The Game-Changer: Automatic Initialization</h2><p id="20c66795-028d-80ab-970d-d7d79a842090" class="">Here&#x27;s the beautiful realization: <strong>C++ maps automatically initialize missing keys with their default value when accessed with </strong><code><strong>operator[]</strong></code>.</p><p id="20c66795-028d-80a2-83ca-f93c2ff86110" class="">For integers, the default value is <code>0</code>. This means:</p><pre id="20c66795-028d-8041-910a-e748cbfa032b" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">unordered_map&lt;char, int&gt; freq;
+</code></pre><p id="20c66795-028d-80c0-b39b-e5986e7e592d" class=""><strong>Problems:</strong> Verbose, repetitive, easy to introduce bugs.</p><h2 id="20c66795-028d-8080-adcb-f2cc76d9e90f" class="">The Game-Changer: Automatic Initialization</h2><p id="20c66795-028d-80ab-970d-d7d79a842090" class="">Here&#x27;s the beautiful realization: <strong>C++ maps automatically initialize missing keys with their default value when accessed with </strong><code><strong>operator[]</strong></code>.</p><p id="20c66795-028d-80a2-83ca-f93c2ff86110" class="">For integers, the default value is <code>0</code>. This means:</p><pre id="20c66795-028d-8041-910a-e748cbfa032b" class="code"><code class="language-cpp">unordered_map&lt;char, int&gt; freq;
 freq[&#x27;a&#x27;]++;  // Creates freq[&#x27;a&#x27;] = 0, then increments to 1
-</code></pre><h2 id="20c66795-028d-809d-bd5f-f23027ccea05" class="">The Elegant Solution</h2><pre id="20c66795-028d-8015-ba42-fb300f774b19" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">vector&lt;int&gt; findAnagrams(string s, string p) {
+</code></pre><h2 id="20c66795-028d-809d-bd5f-f23027ccea05" class="">The Elegant Solution</h2><pre id="20c66795-028d-8015-ba42-fb300f774b19" class="code"><code class="language-cpp">vector&lt;int&gt; findAnagrams(string s, string p) {
     if (s.length() &lt; p.length()) return {};
 
     vector&lt;int&gt; result;
@@ -753,11 +750,11 @@ freq[&#x27;a&#x27;]++;  // Creates freq[&#x27;a&#x27;] = 0, then increments to 1
 
     return result;
 }
-</code></pre><h2 id="20c66795-028d-8029-a975-d7b6dcdd702e" class="">Why This is Brilliant</h2><p id="20c66795-028d-8000-b519-d1592e5132a3" class=""><strong>Cognitive Load Reduction:</strong> No more mental overhead thinking &quot;does this key exist?&quot; You focus on the algorithm, not the bookkeeping.</p><p id="20c66795-028d-8097-9c88-e92b66cf0af7" class=""><strong>Fewer Bugs:</strong> Automatic initialization eliminates errors related to uninitialized values.</p><p id="20c66795-028d-806b-ad72-caab767b18d4" class=""><strong>Readable Code:</strong> The intent is crystal clear: <code>freq[char]++</code> means &quot;count this character.&quot; Period.</p><h2 id="20c66795-028d-80f5-97e5-e2fcf6ab25e6" class="">Beyond Permutations: Other Use Cases</h2><h3 id="20c66795-028d-804e-8d2f-c25817f300d3" class="">Character Frequency Analysis</h3><pre id="20c66795-028d-80ef-8b45-dc4b567a5183" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">unordered_map&lt;char, int&gt; freq;
+</code></pre><h2 id="20c66795-028d-8029-a975-d7b6dcdd702e" class="">Why This is Brilliant</h2><p id="20c66795-028d-8000-b519-d1592e5132a3" class=""><strong>Cognitive Load Reduction:</strong> No more mental overhead thinking &quot;does this key exist?&quot; You focus on the algorithm, not the bookkeeping.</p><p id="20c66795-028d-8097-9c88-e92b66cf0af7" class=""><strong>Fewer Bugs:</strong> Automatic initialization eliminates errors related to uninitialized values.</p><p id="20c66795-028d-806b-ad72-caab767b18d4" class=""><strong>Readable Code:</strong> The intent is crystal clear: <code>freq[char]++</code> means &quot;count this character.&quot; Period.</p><h2 id="20c66795-028d-80f5-97e5-e2fcf6ab25e6" class="">Beyond Permutations: Other Use Cases</h2><h3 id="20c66795-028d-804e-8d2f-c25817f300d3" class="">Character Frequency Analysis</h3><pre id="20c66795-028d-80ef-8b45-dc4b567a5183" class="code"><code class="language-cpp">unordered_map&lt;char, int&gt; freq;
 for (char c : text) {
     freq[c]++;  // Elegant!
 }
-</code></pre><h3 id="20c66795-028d-8037-96e3-f4170094145e" class="">Grouping and Counting</h3><pre id="20c66795-028d-8054-83df-e52bfefd1e0d" class="code"><code class="language-cpp" style="white-space:pre-wrap;word-break:break-all">// Group words by length
+</code></pre><h3 id="20c66795-028d-8037-96e3-f4170094145e" class="">Grouping and Counting</h3><pre id="20c66795-028d-8054-83df-e52bfefd1e0d" class="code"><code class="language-cpp">// Group words by length
 unordered_map&lt;int, vector&lt;string&gt;&gt; groups;
 for (const string&amp; word : words) {
     groups[word.length()].push_back(word);  // Auto-creates empty vector!

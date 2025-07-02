@@ -17,15 +17,10 @@ body {
 @media only screen {
 	body {
 		margin: 2em auto;
-		max-width: 56.25em;
+		max-width: 900px;
+		padding: 1em;
 		color: rgb(55, 53, 47);
 	}
-@media only screen and (max-width: 600px) {
-	body {
-		margin: 2em 1em;
-		max-width: none;
-	}
-}
 }
 
 body {
@@ -712,4 +707,5 @@ blockquote {
                 factors.append(n // i)
 
     return sorted(factors)
-</code></pre><h2 id="20a66795-028d-80d4-9d33-ee901e3edefb" class="">Time Complexity Improvement</h2><ul id="20a66795-028d-80c8-89eb-c8012c4feac0" class="bulleted-list"><li style="list-style-type:disc"><strong>Naive approach</strong>: O(n) - check every number from 1 to n</li></ul><ul id="20a66795-028d-805b-9156-d322b92d8313" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimized approach</strong>: O(√n) - check only up to the square root</li></ul><p id="20a66795-028d-802f-a21c-fb9cda2493ba" class="">For large numbers, this is a significant improvement. Finding factors of 1,000,000 requires only ~1,000 iterations instead of 1,000,000.</p><h2 id="20a66795-028d-801a-96fb-c1b672caf95d" class="">Edge Case: Perfect Squares</h2><p id="20a66795-028d-800f-9fc3-cbc8ec87a52f" class="">When n is a perfect square, one factor pair will be identical (√n × √n = n). The code handles this by checking <code>if i != n // i</code> to avoid adding the square root twice.</p><h2 id="20a66795-028d-807d-aeb4-cca1eb710d75" class="">Practical Applications</h2><p id="20a66795-028d-80fd-8619-c104d783075b" class="">This optimization is valuable in:</p><ul id="20a66795-028d-8075-988d-f78142c0b494" class="bulleted-list"><li style="list-style-type:disc">Prime factorization algorithms</li></ul><ul id="20a66795-028d-80e4-b445-efa50fa135ff" class="bulleted-list"><li style="list-style-type:disc">Cryptography applications</li></ul><ul id="20a66795-028d-801e-9ddf-f1428e0c4d6e" class="bulleted-list"><li style="list-style-type:disc">Mathematical computing libraries</li></ul><ul id="20a66795-028d-8074-93a9-ce4251bc8191" class="bulleted-list"><li style="list-style-type:disc">Performance-critical number theory problems</li></ul><p id="20a66795-028d-8089-8de1-ed23ed746eaa" class="">The square root symmetry principle transforms a linear search into a much more efficient algorithm, demonstrating how mathematical insights can lead to significant performance gains in software development.</p><p id... [truncated]</body></html>
+</code></pre><h2 id="20a66795-028d-80d4-9d33-ee901e3edefb" class="">Time Complexity Improvement</h2><ul id="20a66795-028d-80c8-89eb-c8012c4feac0" class="bulleted-list"><li style="list-style-type:disc"><strong>Naive approach</strong>: O(n) - check every number from 1 to n</li></ul><ul id="20a66795-028d-805b-9156-d322b92d8313" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimized approach</strong>: O(√n) - check only up to the square root</li></ul><p id="20a66795-028d-802f-a21c-fb9cda2493ba" class="">For large numbers, this is a significant improvement. Finding factors of 1,000,000 requires only ~1,000 iterations instead of 1,000,000.</p><h2 id="20a66795-028d-801a-96fb-c1b672caf95d" class="">Edge Case: Perfect Squares</h2><p id="20a66795-028d-800f-9fc3-cbc8ec87a52f" class="">When n is a perfect square, one factor pair will be identical (√n × √n = n). The code handles this by checking <code>if i != n // i</code> to avoid adding the square root twice.</p><h2 id="20a66795-028d-807d-aeb4-cca1eb710d75" class="">Practical Applications</h2><p id="20a66795-028d-80fd-8619-c104d783075b" class="">This optimization is valuable in:</p><ul id="20a66795-028d-8075-988d-f78142c0b494" class="bulleted-list"><li style="list-style-type:disc">Prime factorization algorithms</li></ul><ul id="20a66795-028d-80e4-b445-efa50fa135ff" class="bulleted-list"><li style="list-style-type:disc">Cryptography applications</li></ul><ul id="20a66795-028d-801e-9ddf-f1428e0c4d6e" class="bulleted-list"><li style="list-style-type:disc">Mathematical computing libraries</li></ul><ul id="20a66795-028d-8074-93a9-ce4251bc8191" class="bulleted-list"><li style="list-style-type:disc">Performance-critical number theory problems</li></ul><p id="20a66795-028d-8089-8de1-ed23ed746eaa" class="">The square root symmetry principle transforms a linear search into a much more efficient algorithm, demonstrating how mathematical insights can lead to significant performance gains in software development.</p><p id... [truncated]<p><a href="../../readme.txt">Back to Home</a></p>
+</body></html>
