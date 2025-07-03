@@ -1,0 +1,80 @@
+/* Blog Typography & Layout */
+body {
+  margin: 2em auto;
+  max-width: 900px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #37352f;
+  line-height: 1.6;
+  padding: 0 1em;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 1.87em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; }
+
+p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+a {
+  text-decoration: underline;
+  color: inherit;
+}
+
+.date {
+  font-size: 1.1em;
+  color: #666;
+}
+
+/* Lists */
+ol.compact-list, ul.compact-list {
+  margin-left: 0;
+  padding-left: 1.2em;
+  list-style-position: inside;
+}
+ol.compact-list li,
+ul.compact-list li {
+  margin-bottom: 0.4em;
+}
+
+/* Inline Code */
+code {
+  font-family: SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+  font-size: 0.88em;
+  color: #eb5757;
+  background: rgba(135, 131, 120, 0.15);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+
+/* Code Blocks */
+pre {
+  background: #f6f6f6;
+  padding: 1em;
+  overflow-x: auto;
+  border-radius: 5px;
+}
+
+pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: 0.95em;
+}
+hr {
+  background: transparent;
+  display: block;
+  width: 100%;
+  height: 1px;
+  border: none;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+  margin: 0; /* Balanced with paragraph spacing */
+}

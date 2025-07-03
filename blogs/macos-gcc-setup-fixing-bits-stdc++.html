@@ -1,722 +1,203 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>macOS GCC Setup: Fixing bits/stdc++.h</title><style>
-/* cspell:disable-file */
-/* webkit printing magic: print all background colors */
-html {
-	-webkit-print-color-adjust: exact;
-}
-* {
-	box-sizing: border-box;
-	-webkit-print-color-adjust: exact;
-}
-
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
-@media only screen {
-	body {
-		margin: 2em auto;
-		max-width: 900px;
-		padding: 1em;
-		color: rgb(55, 53, 47);
-	}
-}
-
-body {
-	line-height: 1.5;
-	white-space: pre-wrap;
-}
-
-a,
-a.visited {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.pdf-relative-link-path {
-	font-size: 80%;
-	color: #444;
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.01em;
-	line-height: 1.2;
-	font-weight: 600;
-	margin-bottom: 0;
-}
-
-.page-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-top: 0;
-	margin-bottom: 0.75em;
-}
-
-h1 {
-	font-size: 1.875rem;
-	margin-top: 1.875rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-	margin-top: 1.5rem;
-}
-
-h3 {
-	font-size: 1.25rem;
-	margin-top: 1.25rem;
-}
-
-.source {
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	padding: 1.5em;
-	word-break: break-all;
-}
-
-.callout {
-	border-radius: 3px;
-	padding: 1rem;
-}
-
-figure {
-	margin: 1.25em 0;
-	page-break-inside: avoid;
-}
-
-figcaption {
-	opacity: 0.5;
-	margin-top: 0.5em;
-}
-
-mark {
-	background-color: transparent;
-}
-
-.indented {
-	padding-left: 1.5em;
-}
-
-hr {
-	background: transparent;
-	display: block;
-	width: 100%;
-	height: 1px;
-	visibility: visible;
-	border: none;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-}
-
-img {
-	max-width: 100%;
-}
-
-@media only print {
-	img {
-		max-height: 100vh;
-		object-fit: contain;
-	}
-}
-
-@page {
-	margin: 1in;
-}
-
-.collection-content {
-	font-size: 0.875rem;
-}
-
-.column-list {
-	display: flex;
-	justify-content: space-between;
-}
-
-.column {
-	padding: 0 1em;
-}
-
-.column:first-child {
-	padding-left: 0;
-}
-
-.column:last-child {
-	padding-right: 0;
-}
-
-.table_of_contents-item {
-	display: block;
-	font-size: 0.875rem;
-	line-height: 1.3;
-	padding: 0.125rem;
-}
-
-.table_of_contents-indent-1 {
-	margin-left: 1.5rem;
-}
-
-.table_of_contents-indent-2 {
-	margin-left: 3rem;
-}
-
-.table_of_contents-indent-3 {
-	margin-left: 4.5rem;
-}
-
-.table_of_contents-link {
-	text-decoration: none;
-	opacity: 0.7;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-}
-
-table,
-th,
-td {
-	border: 1px solid rgba(55, 53, 47, 0.09);
-	border-collapse: collapse;
-}
-
-table {
-	border-left: none;
-	border-right: none;
-}
-
-th,
-td {
-	font-weight: normal;
-	padding: 0.25em 0.5em;
-	line-height: 1.5;
-	min-height: 1.5em;
-	text-align: left;
-}
-
-th {
-	color: rgba(55, 53, 47, 0.6);
-}
-
-ol,
-ul {
-	margin: 0;
-	margin-block-start: 0.6em;
-	margin-block-end: 0.6em;
-}
-
-li > ol:first-child,
-li > ul:first-child {
-	margin-block-start: 0.6em;
-}
-
-ul > li {
-	list-style: disc;
-}
-
-ul.to-do-list {
-	padding-inline-start: 0;
-}
-
-ul.to-do-list > li {
-	list-style: none;
-}
-
-.to-do-children-checked {
-	text-decoration: line-through;
-	opacity: 0.375;
-}
-
-ul.toggle > li {
-	list-style: none;
-}
-
-ul {
-	padding-inline-start: 1.7em;
-}
-
-ul > li {
-	padding-left: 0.1em;
-}
-
-ol {
-	padding-inline-start: 1.6em;
-}
-
-ol > li {
-	padding-left: 0.2em;
-}
-
-.mono ol {
-	padding-inline-start: 2em;
-}
-
-.mono ol > li {
-	text-indent: -0.4em;
-}
-
-.toggle {
-	padding-inline-start: 0em;
-	list-style-type: none;
-}
-
-/* Indent toggle children */
-.toggle > li > details {
-	padding-left: 1.7em;
-}
-
-.toggle > li > details > summary {
-	margin-left: -1.1em;
-}
-
-.selected-value {
-	display: inline-block;
-	padding: 0 0.5em;
-	background: rgba(206, 205, 202, 0.5);
-	border-radius: 3px;
-	margin-right: 0.5em;
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	white-space: nowrap;
-}
-
-.collection-title {
-	display: inline-block;
-	margin-right: 1em;
-}
-
-.page-description {
-	margin-bottom: 2em;
-}
-
-.simple-table {
-	margin-top: 1em;
-	font-size: 0.875rem;
-	empty-cells: show;
-}
-.simple-table td {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table th {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table-header-color {
-	background: rgb(247, 246, 243);
-	color: black;
-}
-.simple-table-header {
-	font-weight: 500;
-}
-
-time {
-	opacity: 0.5;
-}
-
-.icon {
-	display: inline-block;
-	max-width: 1.2em;
-	max-height: 1.2em;
-	text-decoration: none;
-	vertical-align: text-bottom;
-	margin-right: 0.5em;
-}
-
-img.icon {
-	border-radius: 3px;
-}
-
-.user-icon {
-	width: 1.5em;
-	height: 1.5em;
-	border-radius: 100%;
-	margin-right: 0.5rem;
-}
-
-.user-icon-inner {
-	font-size: 0.8em;
-}
-
-.text-icon {
-	border: 1px solid #000;
-	text-align: center;
-}
-
-.page-cover-image {
-	display: block;
-	object-fit: cover;
-	width: 100%;
-	max-height: 30vh;
-}
-
-.page-header-icon {
-	font-size: 3rem;
-	margin-bottom: 1rem;
-}
-
-.page-header-icon-with-cover {
-	margin-top: -0.72em;
-	margin-left: 0.07em;
-}
-
-.page-header-icon img {
-	border-radius: 3px;
-}
-
-.link-to-page {
-	margin: 1em 0;
-	padding: 0;
-	border: none;
-	font-weight: 500;
-}
-
-p > .user {
-	opacity: 0.5;
-}
-
-td > .user,
-td > time {
-	white-space: nowrap;
-}
-
-input[type="checkbox"] {
-	transform: scale(1.5);
-	margin-right: 0.6em;
-	vertical-align: middle;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-.image {
-	border: none;
-	margin: 1.5em 0;
-	padding: 0;
-	border-radius: 0;
-	text-align: center;
-}
-
-.code,
-code {
-	background: rgba(135, 131, 120, 0.15);
-	border-radius: 3px;
-	padding: 0.2em 0.4em;
-	border-radius: 3px;
-	tab-size: 2;
-	overflow-x: auto;
-	word-break: break-word;
-}
-
-code {
-	color: #eb5757;
-}
-
-.code {
-	padding: 1.5em 1em;
-}
-
-.code-wrap {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-.code > code {
-	background: none;
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-}
-
-blockquote {
-	font-size: 1.25em;
-	margin: 1em 0;
-	padding-left: 1em;
-	border-left: 3px solid rgb(55, 53, 47);
-}
-
-.bookmark {
-	text-decoration: none;
-	max-height: 8em;
-	padding: 0;
-	display: flex;
-	width: 100%;
-	align-items: stretch;
-}
-
-.bookmark-title {
-	font-size: 0.85em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: 1.75em;
-	white-space: nowrap;
-}
-
-.bookmark-text {
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmark-info {
-	flex: 4 1 180px;
-	padding: 12px 14px 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.bookmark-image {
-	width: 33%;
-	flex: 1 1 180px;
-	display: block;
-	position: relative;
-	object-fit: cover;
-	border-radius: 1px;
-}
-
-.bookmark-description {
-	color: rgba(55, 53, 47, 0.6);
-	font-size: 0.75em;
-	overflow: hidden;
-	max-height: 4.5em;
-	word-break: break-word;
-}
-
-.bookmark-href {
-	font-size: 0.75em;
-	margin-top: 0.25em;
-}
-
-.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
-.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
-.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
-.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
-.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
-.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
-.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
-.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
-.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.highlight-default {
-	color: rgba(50, 48, 44, 1);
-}
-.highlight-gray {
-	color: rgba(115, 114, 110, 1);
-	fill: rgba(115, 114, 110, 1);
-}
-.highlight-brown {
-	color: rgba(159, 107, 83, 1);
-	fill: rgba(159, 107, 83, 1);
-}
-.highlight-orange {
-	color: rgba(217, 115, 13, 1);
-	fill: rgba(217, 115, 13, 1);
-}
-.highlight-yellow {
-	color: rgba(203, 145, 47, 1);
-	fill: rgba(203, 145, 47, 1);
-}
-.highlight-teal {
-	color: rgba(68, 131, 97, 1);
-	fill: rgba(68, 131, 97, 1);
-}
-.highlight-blue {
-	color: rgba(51, 126, 169, 1);
-	fill: rgba(51, 126, 169, 1);
-}
-.highlight-purple {
-	color: rgba(144, 101, 176, 1);
-	fill: rgba(144, 101, 176, 1);
-}
-.highlight-pink {
-	color: rgba(193, 76, 138, 1);
-	fill: rgba(193, 76, 138, 1);
-}
-.highlight-red {
-	color: rgba(205, 60, 58, 1);
-	fill: rgba(205, 60, 58, 1);
-}
-.highlight-default_background {
-	color: rgba(50, 48, 44, 1);
-}
-.highlight-gray_background {
-	background: rgba(248, 248, 247, 1);
-}
-.highlight-brown_background {
-	background: rgba(244, 238, 238, 1);
-}
-.highlight-orange_background {
-	background: rgba(251, 236, 221, 1);
-}
-.highlight-yellow_background {
-	background: rgba(251, 243, 219, 1);
-}
-.highlight-teal_background {
-	background: rgba(237, 243, 236, 1);
-}
-.highlight-blue_background {
-	background: rgba(231, 243, 248, 1);
-}
-.highlight-purple_background {
-	background: rgba(248, 243, 252, 1);
-}
-.highlight-pink_background {
-	background: rgba(252, 241, 246, 1);
-}
-.highlight-red_background {
-	background: rgba(253, 235, 236, 1);
-}
-.block-color-default {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray {
-	color: rgba(115, 114, 110, 1);
-	fill: rgba(115, 114, 110, 1);
-}
-.block-color-brown {
-	color: rgba(159, 107, 83, 1);
-	fill: rgba(159, 107, 83, 1);
-}
-.block-color-orange {
-	color: rgba(217, 115, 13, 1);
-	fill: rgba(217, 115, 13, 1);
-}
-.block-color-yellow {
-	color: rgba(203, 145, 47, 1);
-	fill: rgba(203, 145, 47, 1);
-}
-.block-color-teal {
-	color: rgba(68, 131, 97, 1);
-	fill: rgba(68, 131, 97, 1);
-}
-.block-color-blue {
-	color: rgba(51, 126, 169, 1);
-	fill: rgba(51, 126, 169, 1);
-}
-.block-color-purple {
-	color: rgba(144, 101, 176, 1);
-	fill: rgba(144, 101, 176, 1);
-}
-.block-color-pink {
-	color: rgba(193, 76, 138, 1);
-	fill: rgba(193, 76, 138, 1);
-}
-.block-color-red {
-	color: rgba(205, 60, 58, 1);
-	fill: rgba(205, 60, 58, 1);
-}
-.block-color-default_background {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray_background {
-	background: rgba(248, 248, 247, 1);
-}
-.block-color-brown_background {
-	background: rgba(244, 238, 238, 1);
-}
-.block-color-orange_background {
-	background: rgba(251, 236, 221, 1);
-}
-.block-color-yellow_background {
-	background: rgba(251, 243, 219, 1);
-}
-.block-color-teal_background {
-	background: rgba(237, 243, 236, 1);
-}
-.block-color-blue_background {
-	background: rgba(231, 243, 248, 1);
-}
-.block-color-purple_background {
-	background: rgba(248, 243, 252, 1);
-}
-.block-color-pink_background {
-	background: rgba(252, 241, 246, 1);
-}
-.block-color-red_background {
-	background: rgba(253, 235, 236, 1);
-}
-.select-value-color-uiBlue { background-color: undefined; }
-.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
-.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
-.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
-.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
-.select-value-color-translucentGray { background-color: undefined; }
-.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
-.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
-.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
-.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
-.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
-.select-value-color-pageGlass { background-color: undefined; }
-.select-value-color-washGlass { background-color: undefined; }
-
-.checkbox {
-	display: inline-flex;
-	vertical-align: text-bottom;
-	width: 16;
-	height: 16;
-	background-size: 16px;
-	margin-left: 2px;
-	margin-right: 5px;
-}
-
-.checkbox-on {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-
-.checkbox-off {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-	
-</style>    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head><body><article id="22166795-028d-8080-afa3-de908b201357" class="page sans"><header><p class="page-description"></p></header><div class="page-body"><p><span style="font-size: 1.1em; color: #666666;">Jun 1 2025</span></p><h1 id="22166795-028d-8022-bb95-e7ed4da7a3ae" class="">macOS GCC Setup: Fixing bits/stdc++.h</h1><h2 id="22166795-028d-80e4-adbd-cc3d9fa1d6b8" class="">The Problem</h2><p id="22166795-028d-808d-9457-fceb8e201a9b" class="">You&#x27;re coding on macOS and hit this error:</p><pre id="22166795-028d-80b2-9332-c9d7aa8e5313" class="code"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">#include &lt;bits/stdc++.h&gt;
-// fatal error: &#x27;bits/stdc++.h&#x27; file not found
-</code></pre><p id="22166795-028d-8008-86db-d379e8aaae43" class="">Your competitive programming template breaks because macOS ships with Clang, not GCC. While <code>-std=c++17</code> and <code>-std=c11</code> are the most compatible standards for competitive programming, you need real GCC to access <code>bits/stdc++.h</code>.</p><h2 id="22166795-028d-8055-97de-ec2710040192" class="">The Bug</h2><pre id="22166795-028d-8041-acc4-e1ee0b444073" class="code"><code class="language-Shell"># This isn&#x27;t actually GCC
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>macOS GCC Setup: Fixing bits/stdc++.h</title>
+  <meta name="description" content="Guide to setting up real GCC on macOS to use bits/stdc++.h in competitive programming." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+  <style>
+    body {
+      margin: 2em auto;
+      max-width: 900px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      color: #37352f;
+      line-height: 1.6;
+      padding: 0 1em;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      line-height: 1.2;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.5em; }
+    h3 { font-size: 1.2em; }
+
+    pre {
+      background: #f6f6f6;
+      padding: 1em;
+      overflow-x: auto;
+      border-radius: 5px;
+    }
+
+    code {
+      font-family: SFMono-Regular, Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+      font-size: 0.88em;
+      color: #eb5757;
+      background: rgba(135, 131, 120, 0.15);
+      padding: 0.15em 0.35em;
+      border-radius: 3px;
+    }
+
+    pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: 0.95em;
+    }
+
+    ol.compact-list, ul.compact-list {
+      margin-left: 0;
+      padding-left: 1.2em;
+      list-style-position: inside;
+    }
+
+    ol.compact-list li,
+    ul.compact-list li {
+      margin-bottom: 0.4em;
+    }
+
+    a {
+      text-decoration: underline;
+      color: inherit;
+    }
+
+    p {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    .date {
+      font-size: 1.1em;
+      color: #666666;
+    }
+  </style>
+</head>
+<body>
+
+<p class="date">Jun 1 2025</p>
+
+<h1>macOS GCC Setup: Fixing bits/stdc++.h</h1>
+
+<h2>The Problem</h2>
+<p>You're coding on macOS and hit this error:</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+// fatal error: 'bits/stdc++.h' file not found</code></pre>
+
+<p>Your competitive programming template breaks because macOS ships with Clang, not GCC. While <code>-std=c++17</code> and <code>-std=c11</code> are the most compatible standards for competitive programming, you need real GCC to access <code>bits/stdc++.h</code>.</p>
+
+<h2>The Bug</h2>
+<pre><code class="language-bash"># This isn't actually GCC
 gcc --version
 # Apple clang version 15.0.0...
 
-# bits/stdc++.h doesn&#x27;t exist
-find /usr -name &quot;bits&quot; 2&gt;/dev/null
-# No results
-</code></pre><h2 id="22166795-028d-8097-a1e5-f43632954a97" class="">The Fix</h2><p id="22166795-028d-80ed-ad93-e0b939f10fd7" class="">First, check if you have Homebrew:</p><pre id="22166795-028d-8085-908b-c3311139f79a" class="code"><code class="language-Shell">brew --version
-# If not found, install Homebrew first: https://brew.sh
-</code></pre><p id="22166795-028d-8088-9a95-e88099d7d21d" class="">Install real GCC:</p><pre id="22166795-028d-805c-b592-d27585704159" class="code"><code class="language-Shell">brew install gcc
-</code></pre><p id="22166795-028d-8035-a6c7-f682ded99d0f" class="">Check what version you got:</p><pre id="22166795-028d-80e1-bca6-e96a33b83f66" class="code"><code class="language-Shell">ls /opt/homebrew/bin/g++*
-# Output varies by installation date - might be g++-14, g++-15, or newer
-</code></pre><p id="22166795-028d-801e-a5b3-cfd7fd0f5a59" class="">As of mid-2025, Homebrew installs GCC 15 by default, but GCC 15 was released in April 2025 and versions change over time. Always check your actual version.</p><h2 id="22166795-028d-805e-bd9a-ce6f97510a5e" class="">Working Commands</h2><p id="22166795-028d-80d0-be59-f6ff8ecff531" class="">Replace <code>XX</code> with your actual GCC version (14, 15, 16, etc.):</p><h3 id="22166795-028d-805f-b744-f7ac31cfc6e5" class="">C++</h3><pre id="22166795-028d-805f-862c-d36faa4dad85" class="code"><code class="language-Shell">g++-XX -std=c++17 solution.cpp &amp;&amp; ./a.out
-</code></pre><h3 id="22166795-028d-80fb-bf6c-fdc7ac5a1b08" class="">C</h3><pre id="22166795-028d-8095-a829-ff41b2b78514" class="code"><code class="language-Shell">gcc-XX -std=c11 solution.c &amp;&amp; ./a.out
-</code></pre><h3 id="22166795-028d-800e-a64a-efd45cfe3290" class="">Competitive Programming</h3><pre id="22166795-028d-80cd-8d1e-f6a1a6ca01df" class="code"><code class="language-Shell">g++-XX -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out
-</code></pre><p id="22166795-028d-8065-8395-ec97e3e6581a" class=""><strong>Flag explanations:</strong></p><ul id="22166795-028d-8081-b18a-f8509c078bf8" class="bulleted-list"><li style="list-style-type:disc"><code>O2</code>: Optimization for faster execution (crucial for avoiding time limits)</li></ul><ul id="22166795-028d-8066-af4c-dae325ccfb86" class="bulleted-list"><li style="list-style-type:disc"><code>Wall</code>: Optional warnings to catch bugs (unused variables, etc.) - add if you want extra safety</li></ul><h2 id="22166795-028d-802b-9d72-df8a6edc66fe" class="">Current Version Examples</h2><p id="22166795-028d-80ff-bba2-d3cf06e8f484" class="">For GCC 15 (current as of 2025):</p><pre id="22166795-028d-8013-9043-de378371adc0" class="code"><code class="language-Shell">g++-15 -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out
-</code></pre><p id="22166795-028d-804d-9953-cbd9f1cc47f0" class="">For GCC 14 (if you have an older installation):</p><pre id="22166795-028d-805c-9097-d31548b6d44f" class="code"><code class="language-Shell">g++-14 -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out
-</code></pre><h2 id="22166795-028d-80ac-befc-ed66e714c236" class="">Test It</h2><pre id="22166795-028d-801d-82db-df09d8c23227" class="code"><code class="language-C++" style="white-space:pre-wrap;word-break:break-all">#include &lt;bits/stdc++.h&gt;
+# bits/stdc++.h doesn't exist
+find /usr -name "bits" 2&gt;/dev/null
+# No results</code></pre>
+
+<h2>The Fix</h2>
+<p>First, check if you have Homebrew:</p>
+<pre><code class="language-bash">brew --version
+# If not found, install Homebrew first: https://brew.sh</code></pre>
+
+<p>Install real GCC:</p>
+<pre><code class="language-bash">brew install gcc</code></pre>
+
+<p>Check what version you got:</p>
+<pre><code class="language-bash">ls /opt/homebrew/bin/g++*
+# Output varies by installation date - might be g++-14, g++-15, or newer</code></pre>
+
+<p>As of mid-2025, Homebrew installs GCC 15 by default, but GCC 15 was released in April 2025 and versions change over time. Always check your actual version.</p>
+
+<h2>Working Commands</h2>
+<p>Replace <code>XX</code> with your actual GCC version (14, 15, 16, etc.):</p>
+
+<h3>C++</h3>
+<pre><code class="language-bash">g++-XX -std=c++17 solution.cpp &amp;&amp; ./a.out</code></pre>
+
+<h3>C</h3>
+<pre><code class="language-bash">gcc-XX -std=c11 solution.c &amp;&amp; ./a.out</code></pre>
+
+<h3>Competitive Programming</h3>
+<pre><code class="language-bash">g++-XX -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out</code></pre>
+
+<p><strong>Flag explanations:</strong></p>
+<ul class="compact-list">
+  <li><code>O2</code>: Optimization for faster execution (crucial for avoiding time limits)</li>
+  <li><code>Wall</code>: Optional warnings to catch bugs (unused variables, etc.) - add if you want extra safety</li>
+</ul>
+
+<h2>Current Version Examples</h2>
+<p>For GCC 15 (current as of 2025):</p>
+<pre><code class="language-bash">g++-15 -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out</code></pre>
+
+<p>For GCC 14 (if you have an older installation):</p>
+<pre><code class="language-bash">g++-14 -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out</code></pre>
+
+<h2>Test It</h2>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 int main() {
     vector&lt;int&gt; v = {3, 1, 4};
     sort(v.begin(), v.end());
-    for (int x : v) cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+    for (int x : v) cout &lt;&lt; x &lt;&lt; " ";
     return 0;
-}
-</code></pre><pre id="22166795-028d-80dd-b609-c12112cd625b" class="code"><code class="language-Shell"># Replace XX with your version
+}</code></pre>
+
+<pre><code class="language-bash"># Replace XX with your version
 g++-XX -std=c++17 test.cpp &amp;&amp; ./a.out
-# Output: 1 3 4 ✅
-</code></pre><h2 id="22166795-028d-80cf-9d59-cb37bdfaa13a" class="">Version Management</h2><h3 id="22166795-028d-8054-ad9f-c4a514a60a6b" class="">Find Your GCC Version</h3><pre id="22166795-028d-8065-bdc0-f215b18da2ac" class="code"><code class="language-Shell">ls /opt/homebrew/bin/g++*
-# Shows all available versions: g++-14, g++-15, etc.
-</code></pre><h3 id="22166795-028d-80c8-ab5d-cf98b4818bab" class="">When GCC Updates</h3><p id="22166795-028d-807b-ae59-c4cd141106e6" class="">When new GCC versions are released (like the upcoming GCC 16), Homebrew will install the newer version. You&#x27;ll need to:</p><ol type="1" id="22166795-028d-80cd-8d7d-c56e9fee7e80" class="numbered-list" start="1"><li>Check available versions: <code>ls /opt/homebrew/bin/g++*</code></li></ol><ol type="1" id="22166795-028d-80e7-a850-d6ae2c428954" class="numbered-list" start="2"><li>Update your commands to use the new version number</li></ol><ol type="1" id="22166795-028d-80d6-b085-d82c0b927b8f" class="numbered-list" start="3"><li>Update any aliases you&#x27;ve created</li></ol><h3 id="22166795-028d-80e2-9606-e6be914cc14d" class="">Optional Aliases</h3><p id="22166795-028d-806c-9188-c42e74de3879" class="">Add to <code>~/.zshrc</code> (update version number as needed):</p><pre id="22166795-028d-8006-a74f-f5c87c4d2055" class="code"><code class="language-Shell">alias g++=&#x27;g++-15&#x27;  # Update to current version
-alias gcc=&#x27;gcc-15&#x27;  # Update to current version
-</code></pre><p id="22166795-028d-80f0-8f74-fbb859fe0f1c" class="">After adding aliases, you can use shorter commands:</p><pre id="22166795-028d-8052-b247-d8a770b025fc" class="code"><code class="language-Shell">source ~/.zshrc
-g++ -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out
-</code></pre><h2 id="22166795-028d-80d2-b105-e781bce33926" class="">Key Points</h2><ol type="1" id="22166795-028d-80c5-983b-eec42e6be2c2" class="numbered-list" start="1"><li><strong>macOS != Linux</strong>: Default compiler is Clang, not GCC</li></ol><ol type="1" id="22166795-028d-8068-b7db-e6f07a4514d6" class="numbered-list" start="2"><li><strong>Use versioned commands</strong>: <code>g++-15</code> not <code>g++</code> (version number may vary)</li></ol><ol type="1" id="22166795-028d-809e-9f4b-e3b7245693bf" class="numbered-list" start="3"><li><strong>Check your version</strong>: Use <code>ls /opt/homebrew/bin/g++*</code> to see what&#x27;s installed</li></ol><ol type="1" id="22166795-028d-8081-8b2e-ce1425e149e4" class="numbered-list" start="4"><li><strong>Standards matter</strong>: <code>std=c++17</code> and <code>std=c11</code> are most compatible for competitive programming</li></ol><ol type="1" id="22166795-028d-8026-9c39-fa82640345e6" class="numbered-list" start="5"><li><strong>bits/stdc++.h works</strong>: Only with real GCC from Homebrew</li></ol><ol type="1" id="22166795-028d-801e-a3f6-e06852ede146" class="numbered-list" start="6"><li><strong>Version changes</strong>: New GCC releases mean new version numbers - always verify</li></ol><h2 id="22166795-028d-801f-b1f5-c5b2ef979a57" class="">Troubleshooting</h2><p id="22166795-028d-80f6-a4f8-caa56b76ccdc" class="">If you get &quot;command not found&quot;:</p><ol type="1" id="22166795-028d-8047-a152-f579b09b251a" class="numbered-list" start="1"><li>Check installed versions: <code>ls /opt/homebrew/bin/g++*</code></li></ol><ol type="1" id="22166795-028d-803c-84bc-ef5be05598be" class="numbered-list" start="2"><li>Use the exact version shown (e.g., <code>g++-14</code>, <code>g++-15</code>, <code>g++-16</code>)</li></ol><ol type="1" id="22166795-028d-8099-96df-daf952aa3a65" class="numbered-list" start="3"><li>Make sure Homebrew path is in your PATH</li></ol><p id="" class="">Now your competitive programming setup works reliably on macOS, regardless of which GCC version gets installed!</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span><p><a href="../index.html">Back to Home</a></p></body></html>
+# Output: 1 3 4 ✅</code></pre>
+
+<h2>Version Management</h2>
+
+<h3>Find Your GCC Version</h3>
+<pre><code class="language-bash">ls /opt/homebrew/bin/g++*
+# Shows all available versions: g++-14, g++-15, etc.</code></pre>
+
+<h3>When GCC Updates</h3>
+<p>When new GCC versions are released (like the upcoming GCC 16), Homebrew will install the newer version. You'll need to:</p>
+<ol class="compact-list">
+  <li>Check available versions: <code>ls /opt/homebrew/bin/g++*</code></li>
+  <li>Update your commands to use the new version number</li>
+  <li>Update any aliases you've created</li>
+</ol>
+
+<h3>Optional Aliases</h3>
+<p>Add to <code>~/.zshrc</code> (update version number as needed):</p>
+<pre><code class="language-bash">alias g++='g++-15' # Update to current version
+alias gcc='gcc-15' # Update to current version</code></pre>
+<p>After adding aliases, you can use shorter commands:</p>
+<pre><code class="language-bash">source ~/.zshrc
+g++ -std=c++17 -O2 solution.cpp &amp;&amp; ./a.out</code></pre>
+
+<h2>Key Points</h2>
+<ol class="compact-list">
+  <li><strong>macOS != Linux</strong>: Default compiler is Clang, not GCC</li>
+  <li><strong>Use versioned commands</strong>: <code>g++-15</code> not <code>g++</code> (version number may vary)</li>
+  <li><strong>Check your version</strong>: Use <code>ls /opt/homebrew/bin/g++*</code> to see what's installed</li>
+  <li><strong>Standards matter</strong>: <code>std=c++17</code> and <code>std=c11</code> are most compatible for competitive programming</li>
+  <li><strong>bits/stdc++.h works</strong>: Only with real GCC from Homebrew</li>
+  <li><strong>Version changes</strong>: New GCC releases mean new version numbers - always verify</li>
+</ol>
+
+<h2>Troubleshooting</h2>
+<p>If you get "command not found":</p>
+<ol class="compact-list">
+  <li>Check installed versions: <code>ls /opt/homebrew/bin/g++*</code></li>
+  <li>Use the exact version shown (e.g., <code>g++-14</code>, <code>g++-15</code>, <code>g++-16</code>)</li>
+  <li>Make sure Homebrew path is in your PATH</li>
+</ol>
+
+<p>Now your competitive programming setup works reliably on macOS, regardless of which GCC version gets installed!</p>
+
+<p><a href="../index.html">← Back to Home</a></p>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+</body>
+</html>

@@ -1,684 +1,35 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Gemini CLI: The Free AI Agent That Actually Codes</title><style>
-/* cspell:disable-file */
-/* webkit printing magic: print all background colors */
-html {
-	-webkit-print-color-adjust: exact;
-}
-* {
-	box-sizing: border-box;
-	-webkit-print-color-adjust: exact;
-}
-
-html,
-body {
-	margin: 0;
-	padding: 0;
-}
-@media only screen {
-	body {
-		margin: 2em auto;
-		max-width: 900px;
-		padding: 1em;
-		color: rgb(55, 53, 47);
-	}
-}
-
-a,
-a.visited {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.pdf-relative-link-path {
-	font-size: 80%;
-	color: #444;
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.01em;
-	line-height: 1.2;
-	font-weight: 600;
-	margin-bottom: 0;
-}
-
-.page-title {
-	font-size: 2.5rem;
-	font-weight: 700;
-	margin-top: 0;
-	margin-bottom: 0.75em;
-}
-
-h1 {
-	font-size: 1.875rem;
-	margin-top: 1.875rem;
-}
-
-h2 {
-	font-size: 1.5rem;
-	margin-top: 1.5rem;
-}
-
-h3 {
-	font-size: 1.25rem;
-	margin-top: 1.25rem;
-}
-
-.source {
-	border: 1px solid #ddd;
-	border-radius: 3px;
-	padding: 1.5em;
-	word-break: break-all;
-}
-
-.callout {
-	border-radius: 3px;
-	padding: 1rem;
-}
-
-figure {
-	margin: 1.25em 0;
-	page-break-inside: avoid;
-}
-
-figcaption {
-	opacity: 0.5;
-	font-size: 85%;
-	margin-top: 0.5em;
-}
-
-mark {
-	background-color: transparent;
-}
-
-.indented {
-	padding-left: 1.5em;
-}
-
-hr {
-	background: transparent;
-	display: block;
-	width: 100%;
-	height: 1px;
-	visibility: visible;
-	border: none;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
-}
-
-img {
-	max-width: 100%;
-}
-
-@media only print {
-	img {
-		max-height: 100vh;
-		object-fit: contain;
-	}
-}
-
-@page {
-	margin: 1in;
-}
-
-.collection-content {
-	font-size: 0.875rem;
-}
-
-.column-list {
-	display: flex;
-	justify-content: space-between;
-}
-
-.column {
-	padding: 0 1em;
-}
-
-.column:first-child {
-	padding-left: 0;
-}
-
-.column:last-child {
-	padding-right: 0;
-}
-
-.table_of_contents-item {
-	display: block;
-	font-size: 0.875rem;
-	line-height: 1.3;
-	padding: 0.125rem;
-}
-
-.table_of_contents-indent-1 {
-	margin-left: 1.5rem;
-}
-
-.table_of_contents-indent-2 {
-	margin-left: 3rem;
-}
-
-.table_of_contents-indent-3 {
-	margin-left: 4.5rem;
-}
-
-.table_of_contents-link {
-	text-decoration: none;
-	opacity: 0.7;
-	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
-}
-
-table,
-th,
-td {
-	border: 1px solid rgba(55, 53, 47, 0.09);
-	border-collapse: collapse;
-}
-
-table {
-	border-left: none;
-	border-right: none;
-}
-
-th,
-td {
-	font-weight: normal;
-	padding: 0.25em 0.5em;
-	line-height: 1.5;
-	min-height: 1.5em;
-	text-align: left;
-}
-
-th {
-	color: rgba(55, 53, 47, 0.6);
-}
-
-ol,
-ul {
-	margin: 0;
-	margin-block-start: 0.6em;
-	margin-block-end: 0.6em;
-}
-
-li > ol:first-child,
-li > ul:first-child {
-	margin-block-start: 0.6em;
-}
-
-ul > li {
-	list-style: disc;
-}
-
-ul.to-do-list {
-	padding-inline-start: 0;
-}
-
-ul.to-do-list > li {
-	list-style: none;
-}
-
-.to-do-children-checked {
-	text-decoration: line-through;
-	opacity: 0.375;
-}
-
-ul.toggle > li {
-	list-style: none;
-}
-
-ul {
-	padding-inline-start: 1.7em;
-}
-
-ul > li {
-	padding-left: 0.1em;
-}
-
-ol {
-	padding-inline-start: 1.6em;
-}
-
-ol > li {
-	padding-left: 0.2em;
-}
-
-.mono ol {
-	padding-inline-start: 2em;
-}
-
-.mono ol > li {
-	text-indent: -0.4em;
-}
-
-.toggle {
-	padding-inline-start: 0em;
-	list-style-type: none;
-}
-
-/* Indent toggle children */
-.toggle > li > details {
-	padding-left: 1.7em;
-}
-
-.toggle > li > details > summary {
-	margin-left: -1.1em;
-}
-
-.selected-value {
-	display: inline-block;
-	padding: 0 0.5em;
-	background: rgba(206, 205, 202, 0.5);
-	border-radius: 3px;
-	margin-right: 0.5em;
-	margin-top: 0.3em;
-	margin-bottom: 0.3em;
-	white-space: nowrap;
-}
-
-.collection-title {
-	display: inline-block;
-	margin-right: 1em;
-}
-
-.page-description {
-	margin-bottom: 2em;
-}
-
-.simple-table {
-	margin-top: 1em;
-	font-size: 0.875rem;
-	empty-cells: show;
-}
-.simple-table td {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table th {
-	height: 29px;
-	min-width: 120px;
-}
-
-.simple-table-header-color {
-	background: rgb(247, 246, 243);
-	color: black;
-}
-.simple-table-header {
-	font-weight: 500;
-}
-
-time {
-	opacity: 0.5;
-}
-
-.icon {
-	display: inline-block;
-	max-width: 1.2em;
-	max-height: 1.2em;
-	text-decoration: none;
-	vertical-align: text-bottom;
-	margin-right: 0.5em;
-}
-
-img.icon {
-	border-radius: 3px;
-}
-
-.user-icon {
-	width: 1.5em;
-	height: 1.5em;
-	border-radius: 100%;
-	margin-right: 0.5rem;
-}
-
-.user-icon-inner {
-	font-size: 0.8em;
-}
-
-.text-icon {
-	border: 1px solid #000;
-	text-align: center;
-}
-
-.page-cover-image {
-	display: block;
-	object-fit: cover;
-	width: 100%;
-	max-height: 30vh;
-}
-
-.page-header-icon {
-	font-size: 3rem;
-	margin-bottom: 1rem;
-}
-
-.page-header-icon-with-cover {
-	margin-top: -0.72em;
-	margin-left: 0.07em;
-}
-
-.page-header-icon img {
-	border-radius: 3px;
-}
-
-.link-to-page {
-	margin: 1em 0;
-	padding: 0;
-	border: none;
-	font-weight: 500;
-}
-
-p > .user {
-	opacity: 0.5;
-}
-
-td > .user,
-td > time {
-	white-space: nowrap;
-}
-
-input[type="checkbox"] {
-	transform: scale(1.5);
-	margin-right: 0.6em;
-	vertical-align: middle;
-}
-
-p {
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
-}
-
-.image {
-	border: none;
-	margin: 1.5em 0;
-	padding: 0;
-	border-radius: 0;
-	text-align: center;
-}
-
-.code,
-code {
-	background: rgba(135, 131, 120, 0.15);
-	border-radius: 3px;
-	padding: 0.2em 0.4em;
-	border-radius: 3px;
-	font-size: 85%;
-	tab-size: 2;
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-code {
-	color: #eb5757;
-}
-
-.code {
-	padding: 1.5em 1em;
-}
-
-.code-wrap {
-	white-space: pre-wrap;
-	word-break: break-all;
-}
-
-.code > code {
-	background: none;
-	padding: 0;
-	font-size: 100%;
-	color: inherit;
-}
-
-blockquote {
-	font-size: 1.25em;
-	margin: 1em 0;
-	padding-left: 1em;
-	border-left: 3px solid rgb(55, 53, 47);
-}
-
-.bookmark {
-	text-decoration: none;
-	max-height: 8em;
-	padding: 0;
-	display: flex;
-	width: 100%;
-	align-items: stretch;
-}
-
-.bookmark-title {
-	font-size: 0.85em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	height: 1.75em;
-	white-space: nowrap;
-}
-
-.bookmark-text {
-	display: flex;
-	flex-direction: column;
-}
-
-.bookmark-info {
-	flex: 4 1 180px;
-	padding: 12px 14px 14px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
-
-.bookmark-image {
-	width: 33%;
-	flex: 1 1 180px;
-	display: block;
-	position: relative;
-	object-fit: cover;
-	border-radius: 1px;
-}
-
-.bookmark-description {
-	color: rgba(55, 53, 47, 0.6);
-	font-size: 0.75em;
-	overflow: hidden;
-	max-height: 4.5em;
-	word-break: break-word;
-}
-
-.bookmark-href {
-	font-size: 0.75em;
-	margin-top: 0.25em;
-}
-
-.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
-.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
-.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
-.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
-.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
-.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
-.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
-.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
-.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
-.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
-.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
-.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
-.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
-.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
-.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
-.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
-.highlight-default {
-	color: rgba(50, 48, 44, 1);
-}
-.highlight-gray {
-	color: rgba(115, 114, 110, 1);
-	fill: rgba(115, 114, 110, 1);
-}
-.highlight-brown {
-	color: rgba(159, 107, 83, 1);
-	fill: rgba(159, 107, 83, 1);
-}
-.highlight-orange {
-	color: rgba(217, 115, 13, 1);
-	fill: rgba(217, 115, 13, 1);
-}
-.highlight-yellow {
-	color: rgba(203, 145, 47, 1);
-	fill: rgba(203, 145, 47, 1);
-}
-.highlight-teal {
-	color: rgba(68, 131, 97, 1);
-	fill: rgba(68, 131, 97, 1);
-}
-.highlight-blue {
-	color: rgba(51, 126, 169, 1);
-	fill: rgba(51, 126, 169, 1);
-}
-.highlight-purple {
-	color: rgba(144, 101, 176, 1);
-	fill: rgba(144, 101, 176, 1);
-}
-.highlight-pink {
-	color: rgba(193, 76, 138, 1);
-	fill: rgba(193, 76, 138, 1);
-}
-.highlight-red {
-	color: rgba(205, 60, 58, 1);
-	fill: rgba(205, 60, 58, 1);
-}
-.highlight-default_background {
-	color: rgba(50, 48, 44, 1);
-}
-.highlight-gray_background {
-	background: rgba(248, 248, 247, 1);
-}
-.highlight-brown_background {
-	background: rgba(244, 238, 238, 1);
-}
-.highlight-orange_background {
-	background: rgba(251, 236, 221, 1);
-}
-.highlight-yellow_background {
-	background: rgba(251, 243, 219, 1);
-}
-.highlight-teal_background {
-	background: rgba(237, 243, 236, 1);
-}
-.highlight-blue_background {
-	background: rgba(231, 243, 248, 1);
-}
-.highlight-purple_background {
-	background: rgba(248, 243, 252, 1);
-}
-.highlight-pink_background {
-	background: rgba(252, 241, 246, 1);
-}
-.highlight-red_background {
-	background: rgba(253, 235, 236, 1);
-}
-.block-color-default {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray {
-	color: rgba(115, 114, 110, 1);
-	fill: rgba(115, 114, 110, 1);
-}
-.block-color-brown {
-	color: rgba(159, 107, 83, 1);
-	fill: rgba(159, 107, 83, 1);
-}
-.block-color-orange {
-	color: rgba(217, 115, 13, 1);
-	fill: rgba(217, 115, 13, 1);
-}
-.block-color-yellow {
-	color: rgba(203, 145, 47, 1);
-	fill: rgba(203, 145, 47, 1);
-}
-.block-color-teal {
-	color: rgba(68, 131, 97, 1);
-	fill: rgba(68, 131, 97, 1);
-}
-.block-color-blue {
-	color: rgba(51, 126, 169, 1);
-	fill: rgba(51, 126, 169, 1);
-}
-.block-color-purple {
-	color: rgba(144, 101, 176, 1);
-	fill: rgba(144, 101, 176, 1);
-}
-.block-color-pink {
-	color: rgba(193, 76, 138, 1);
-	fill: rgba(193, 76, 138, 1);
-}
-.block-color-red {
-	color: rgba(205, 60, 58, 1);
-	fill: rgba(205, 60, 58, 1);
-}
-.block-color-default_background {
-	color: inherit;
-	fill: inherit;
-}
-.block-color-gray_background {
-	background: rgba(248, 248, 247, 1);
-}
-.block-color-brown_background {
-	background: rgba(244, 238, 238, 1);
-}
-.block-color-orange_background {
-	background: rgba(251, 236, 221, 1);
-}
-.block-color-yellow_background {
-	background: rgba(251, 243, 219, 1);
-}
-.block-color-teal_background {
-	background: rgba(237, 243, 236, 1);
-}
-.block-color-blue_background {
-	background: rgba(231, 243, 248, 1);
-}
-.block-color-purple_background {
-	background: rgba(248, 243, 252, 1);
-}
-.block-color-pink_background {
-	background: rgba(252, 241, 246, 1);
-}
-.block-color-red_background {
-	background: rgba(253, 235, 236, 1);
-}
-.select-value-color-uiBlue { background-color: undefined; }
-.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
-.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
-.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
-.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
-.select-value-color-translucentGray { background-color: undefined; }
-.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
-.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
-.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
-.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
-.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
-.select-value-color-pageGlass { background-color: undefined; }
-.select-value-color-washGlass { background-color: undefined; }
-
-.checkbox {
-	display: inline-flex;
-	vertical-align: text-bottom;
-	width: 16;
-	height: 16;
-	background-size: 16px;
-	margin-left: 2px;
-	margin-right: 5px;
-}
-
-.checkbox-on {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-
-.checkbox-off {
-	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
-}
-	
-</style></head><body><article id="22366795-028d-80d7-9434-f22a18ec45c5" class="page sans"><div class="page-body"><p><span style='font-size: 1.1em; color: #666666;'>Jun 28 2025</span></p><h1>Gemini CLI: The Free AI Agent That Actually Codes</h1><p id="22366795-028d-80f1-8aae-d00b47baaafc" class="">Google just dropped something that changes how we interact with AI in development. Gemini CLI isn't another chatbot interface – it's an AI agent that lives in your terminal, manipulates files, and actually gets work done.</p><h2>What Makes It Different</h2><p id="22366795-028d-8070-81dd-fad4ee8c5808" class="">Unlike traditional AI tools that give you text responses, Gemini CLI connects Google's Gemini 2.5 Pro directly to your local codebase. It can analyze your entire project with a 1 million token context window, refactor complex functions, execute shell commands, generate documentation, and organize files – all through natural language prompts.</p><p id="22366795-028d-802c-8246-eb8fedcfe9b2" class="">Think of it as having an AI pair programmer that can:</p><ul id="22366795-028d-8018-8309-fb6ef891cd9b" class="bulleted-list"><li style="list-style-type:disc">Scan and fix security vulnerabilities</li></ul><ul id="22366795-028d-8072-be52-e0630974e85c" class="bulleted-list"><li style="list-style-type:disc">Create and modify files automatically</li></ul><ul id="22366795-028d-801a-9edd-d2ae7f5a3db7" class="bulleted-list"><li style="list-style-type:disc">Execute terminal commands</li></ul><ul id="22366795-028d-803a-abfc-f1a6f9ef496d" class="bulleted-list"><li style="list-style-type:disc">Generate tests and documentation</li></ul><ul id="22366795-028d-80f5-a1c1-cdd80855a065" class="bulleted-list"><li style="list-style-type:disc">Debug problematic code sections</li></ul><h2>Getting Started</h2><p id="22366795-028d-808e-b19b-d5e2c08a3a9e" class="">Installation is simple:</p><pre id="22366795-028d-80d3-819a-e9828c253f66" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all"># Option 1: Install globally
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gemini CLI: The Free AI Agent That Actually Codes</title>
+  <link rel="stylesheet" href="css/blog.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+</head>
+<body>
+
+<p class="date">Jun 28 2025</p>
+
+<h1>Gemini CLI: The Free AI Agent That Actually Codes</h1>
+
+<p>Google just dropped something that changes how we interact with AI in development. Gemini CLI isn't another chatbot interface – it's an AI agent that lives in your terminal, manipulates files, and actually gets work done.</p>
+
+<h2>What Makes It Different</h2>
+<p>Unlike traditional AI tools that give you text responses, Gemini CLI connects Google's Gemini 2.5 Pro directly to your local codebase. It can analyze your entire project with a 1 million token context window, refactor complex functions, execute shell commands, generate documentation, and organize files – all through natural language prompts.</p>
+
+<p>Think of it as having an AI pair programmer that can:</p>
+<ul class="compact-list">
+  <li>Scan and fix security vulnerabilities</li>
+  <li>Create and modify files automatically</li>
+  <li>Execute terminal commands</li>
+  <li>Generate tests and documentation</li>
+  <li>Debug problematic code sections</li>
+</ul>
+
+<h2>Getting Started</h2>
+<p>Installation is simple:</p>
+<pre><code class="language-shell"># Option 1: Install globally
 npm install -g @google/gemini-cli
 
 # Option 2: Run directly using npx (no global install needed)
@@ -686,12 +37,29 @@ npx @google/gemini-cli
 
 # Start in your project directory
 cd your-project
-gemini
-</code></pre><p id="22366795-028d-806e-83e2-d3b62ee9391f" class="">You'll authenticate with your Google account (no API keys or credit cards required) and get immediate access to Gemini 2.5 Pro.</p><h2>Real-World Example: Security Audit</h2><p id="22366795-028d-80e8-bcfd-e545a84ec9a8" class="">Here's where it gets impressive. I used it to audit a project I knew had security issues:</p><pre id="22366795-028d-80ce-871e-e527af82a3a6" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">bash
+gemini</code></pre>
+
+<p>You'll authenticate with your Google account (no API keys or credit cards required) and get immediate access to Gemini 2.5 Pro.</p>
+
+<h2>Real-World Example: Security Audit</h2>
+<p>Here's where it gets impressive. I used it to audit a project I knew had security issues:</p>
+<pre><code class="language-shell">bash
 cd my-project
 gemini
-&gt; scan this project for hardcoded API keys and security vulnerabilities
-</code></pre><p id="22366795-028d-8058-b817-f168d68e786a" class="">The results weren't just suggestions – it actually implemented fixes:</p><ul id="22366795-028d-8008-84f1-e52bb62309ca" class="bulleted-list"><li style="list-style-type:disc"><strong>Found the problem</strong>: Identified hardcoded API keys in multiple files</li></ul><ul id="22366795-028d-8072-b7a2-db03c042ec89" class="bulleted-list"><li style="list-style-type:disc"><strong>Created solutions</strong>: Generated <code>.env</code> files with proper variable names</li></ul><ul id="22366795-028d-8066-91b1-da303bd4d535" class="bulleted-list"><li style="list-style-type:disc"><strong>Refactored code</strong>: Replaced hardcoded strings with <code>process.env.API_KEY</code> references</li></ul><ul id="22366795-028d-804f-b596-cb6e41442d29" class="bulleted-list"><li style="list-style-type:disc"><strong>Updated configs</strong>: Modified <code>.gitignore</code> to exclude sensitive files</li></ul><p id="22366795-028d-80e3-9c7b-e1c2095fac34" class="">This isn't pattern matching – it understood my project structure and made the actual changes.</p><h2>More Practical Use Cases</h2><pre id="22366795-028d-8084-adcb-e363006c3145" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">bash
+&gt; scan this project for hardcoded API keys and security vulnerabilities</code></pre>
+
+<p>The results weren't just suggestions – it actually implemented fixes:</p>
+<ul class="compact-list">
+  <li><strong>Found the problem</strong>: Identified hardcoded API keys in multiple files</li>
+  <li><strong>Created solutions</strong>: Generated <code>.env</code> files with proper variable names</li>
+  <li><strong>Refactored code</strong>: Replaced hardcoded strings with <code>process.env.API_KEY</code> references</li>
+  <li><strong>Updated configs</strong>: Modified <code>.gitignore</code> to exclude sensitive files</li>
+</ul>
+
+<p>This isn't pattern matching – it understood my project structure and made the actual changes.</p>
+
+<h2>More Practical Use Cases</h2>
+<pre><code class="language-shell">bash
 # Code analysis and fixes
 &gt; explain what this package.json file contains
 &gt; refactor this authentication function to use proper error handling
@@ -704,5 +72,54 @@ gemini
 
 # File operations
 &gt; organize these config files into proper directories
-&gt; convert all images in this directory to PNG format
-</code></pre><h2>The Pricing Reality Check</h2><p id="22366795-028d-80c6-b7dd-c15a0ab5a8ab" class="">Here's the game-changer compared to competitors:</p><p id="22366795-028d-80ae-b0c2-c5d825e2fba0" class=""><p id="22366795-028d-80ae-b0c2-c5d825e2fba0" class=""><strong>Gemini CLI</strong>: 1,000 requests per day, completely free <strong>Claude Code</strong>: $20/month for 10-40 prompts every 5 hours <strong>Cursor</strong>: $20/month for 500 total requests, $200/month for unlimited <strong>Aider</strong>: Requires separate OpenAI/Anthropic API costs</p></p><p id="22366795-028d-8047-9d20-d90ab5118ca4" class="">What you get free with Gemini CLI:</p><ul id="22366795-028d-80d6-9101-ecc1e75db0b6" class="bulleted-list"><li style="list-style-type:disc">60 requests per minute (up to 1,000 daily)</li></ul><ul id="22366795-028d-8010-834d-dd2e5911671b" class="bulleted-list"><li style="list-style-type:disc">Full Gemini 2.5 Pro with 1 million token context</li></ul><ul id="22366795-028d-806b-9c87-fc9ba55a4e00" class="bulleted-list"><li style="list-style-type:disc">Complete feature set with no artificial limitations</li></ul><ul id="22366795-028d-80b7-ba5f-ef8ced2713f6" class="bulleted-list"><li style="list-style-type:disc">Cross-platform support</li></ul><ul id="22366795-028d-808f-8628-dc4b4053bca0" class="bulleted-list"><li style="list-style-type:disc">No API keys or credit card required</li></ul><h2>Limitations and Best Practices</h2><p id="22366795-028d-808f-8aad-e62f843f03f9" class=""><strong>Watch out for:</strong></p><ul id="22366795-028d-80a0-acf0-eea2ef86209f" class="bulleted-list"><li style="list-style-type:disc"><strong>Loop issues</strong>: Can get stuck in repetitive cycles with complex tasks. If it repeats actions, interrupt and provide specific guidance.</li></ul><ul id="22366795-028d-80d2-b020-e4583cd72b11" class="bulleted-list"><li style="list-style-type:disc"><strong>Context switching</strong>: Works best when focused on single projects per session.</li></ul><ul id="22366795-028d-8013-8f8b-dce077449744" class="bulleted-list"><li style="list-style-type:disc"><strong>Command execution</strong>: Always review suggested shell commands before confirming.</li></ul><p id="22366795-028d-80d0-b812-fe94c8357b76" class=""><strong>Best practices:</strong></p><ul id="22366795-028d-8072-9eb3-e8258775d4c5" class="bulleted-list"><li style="list-style-type:disc">Be specific: &quot;refactor this authentication function to use proper error handling&quot; vs &quot;fix my code&quot;</li></ul><ul id="22366795-028d-80e1-a000-f5113575f583" class="bulleted-list"><li style="list-style-type:disc">Reference files directly: &quot;analyze the security of user.js, focusing on the login function&quot;</li></ul><ul id="22366795-028d-80d4-bfbf-dcc72fce46b7" class="bulleted-list"><li style="list-style-type:disc">Break complex tasks into smaller, sequential requests</li></ul><ul id="22366795-028d-8005-ad8f-cc1dda991fcc" class="bulleted-list"><li style="list-style-type:disc">Always review generated code before implementing</li></ul><h2 id="22366795-028d-80e0-8102-ca0fd040c735" class="">Worth Trying?</h2><p id="22366795-028d-80a6-8898-c24741e17c98" class="">If you&#x27;re using AI tools for development, Gemini CLI offers significant advantages: no API costs for most usage, direct file system access for real workflow integration, and advanced reasoning from Gemini 2.5 Pro.</p><p id="22366795-028d-8023-8947-eb3e00eef498" class="">The occasional loop issues and learning curve are minor compared to having an AI agent that executes tasks rather than just suggesting them. For developers comfortable with command-line workflows, especially at Google&#x27;s current free usage levels, it&#x27;s worth exploring.</p><p id="22366795-028d-80f7-ac93-cf27fbc81819" class="">Check out the <a href="https://github.com/google-gemini/gemini-cli">official repository</a> for detailed documentation and examples.</p><hr id="22366795-028d-8026-afdf-ee5c4b3f9f00"/><p id="22366795-028d-80fe-bb34-df5f8a18dae2" class=""><em>Gemini CLI is currently in preview. Features and usage limits may change as the project evolves.</em></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html></ul><p><a href="../index.html">Back to Home</a></p></div></article></body></html>
+&gt; convert all images in this directory to PNG format</code></pre>
+
+<h2>The Pricing Reality Check</h2>
+<p><strong>Gemini CLI</strong>: 1,000 requests per day, completely free  
+<strong>Claude Code</strong>: $20/month for 10–40 prompts every 5 hours  
+<strong>Cursor</strong>: $20/month for 500 total requests, $200/month for unlimited  
+<strong>Aider</strong>: Requires separate OpenAI/Anthropic API costs</p>
+
+<p>What you get free with Gemini CLI:</p>
+<ul class="compact-list">
+  <li>60 requests per minute (up to 1,000 daily)</li>
+  <li>Full Gemini 2.5 Pro with 1 million token context</li>
+  <li>Complete feature set with no artificial limitations</li>
+  <li>Cross-platform support</li>
+  <li>No API keys or credit card required</li>
+</ul>
+
+<h2>Limitations and Best Practices</h2>
+<p><strong>Watch out for:</strong></p>
+<ul class="compact-list">
+  <li><strong>Loop issues</strong>: Can get stuck in repetitive cycles with complex tasks. If it repeats actions, interrupt and provide specific guidance.</li>
+  <li><strong>Context switching</strong>: Works best when focused on single projects per session.</li>
+  <li><strong>Command execution</strong>: Always review suggested shell commands before confirming.</li>
+</ul>
+
+<p><strong>Best practices:</strong></p>
+<ul class="compact-list">
+  <li>Be specific: "refactor this authentication function to use proper error handling" vs "fix my code"</li>
+  <li>Reference files directly: "analyze the security of user.js, focusing on the login function"</li>
+  <li>Break complex tasks into smaller, sequential requests</li>
+  <li>Always review generated code before implementing</li>
+</ul>
+
+<h2>Worth Trying?</h2>
+<p>If you're using AI tools for development, Gemini CLI offers significant advantages: no API costs for most usage, direct file system access for real workflow integration, and advanced reasoning from Gemini 2.5 Pro.</p>
+
+<p>The occasional loop issues and learning curve are minor compared to having an AI agent that executes tasks rather than just suggesting them. For developers comfortable with command-line workflows, especially at Google’s current free usage levels, it's worth exploring.</p>
+
+<p>Check out the <a href="https://github.com/google-gemini/gemini-cli">official repository</a> for detailed documentation and examples.</p>
+
+<hr />
+<p><em>Gemini CLI is currently in preview. Features and usage limits may change as the project evolves.</em></p>
+
+<p><a href="../index.html">← Back to Home</a></p>
+
+<!-- PrismJS -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+</body>
+</html>
