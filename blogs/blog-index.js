@@ -1,28 +1,33 @@
 const blogs = [
   {
-    title: "Gemini CLI: The Free AI Agent That Actually Codes",
-    date: "Jun 28 2025",
-    href: "blogs/gemini-cli-the-free-ai-agent-that-actually-codes.html",
+    "title": "Gemini CLI: The Free AI Agent That Actually Codes",
+    "date": "Jun 28 2025",
+    "href": "blogs/gemini-cli-the-free-ai-agent-that-actually-codes.html"
   },
   {
-    title: "C++ Maps: The Hidden Power of Automatic Initialization in Permutation Problems",
-    date: "Jun 8 2025",
-    href: "blogs/cpp-maps-the-hidden-power-of-automatic-initialization.html",
+    "title": "The Sieve of Eratosthenes: The Ancient Algorithm Behind Modern Primes",
+    "date": "Jun 20 2025",
+    "href": "blogs/sieve-of-eratosthenes-prime-algorithm.html"
   },
   {
-    title: "Optimizing Factor Finding: The Square Root Symmetry Trick",
-    date: "Jun 6 2025",
-    href: "blogs/optimizing-factor-finding-the-square-root-symmetry-trick.html",
+    "title": "C++ Maps: The Hidden Power of Automatic Initialization",
+    "date": "Jun 8 2025",
+    "href": "blogs/cpp-maps-the-hidden-power-of-automatic-initialization.html"
   },
   {
-    title: "The Hidden Input Order Bug: A Competitive Programming Pitfall",
-    date: "Jun 6 2025",
-    href: "blogs/the-hidden-input-order-bug.html",
+    "title": "Optimizing Factor Finding: The Square Root Symmetry Trick",
+    "date": "Jun 6 2025",
+    "href": "blogs/optimizing-factor-finding-the-square-root-symmetry-trick.html"
   },
   {
-    title: "macOS GCC Setup: Fixing bits/stdc++.h",
-    date: "Jun 1 2025",
-    href: "blogs/macos-gcc-setup-fixing-bits-stdc++.html",
+    "title": "The Hidden Input Order Bug",
+    "date": "Jun 6 2025",
+    "href": "blogs/the-hidden-input-order-bug.html"
+  },
+  {
+    "title": "macOS GCC Setup: Fixing bits/stdc++.h",
+    "date": "Jun 1 2025",
+    "href": "blogs/macos-gcc-setup-fixing-bits-stdc++.html"
   }
 ];
 
