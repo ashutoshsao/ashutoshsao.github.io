@@ -1,5 +1,10 @@
 const blogs = [
   {
+    "title": "Installing Windows: A Complete Step-by-Step Guide",
+    "date": "Jul 5 2025",
+    "href": "blogs/installing-windows-step-by-step.html"
+  },
+  {
     "title": "Gemini CLI: The Free AI Agent That Actually Codes",
     "date": "Jun 28 2025",
     "href": "blogs/gemini-cli-the-free-ai-agent-that-actually-codes.html"
