@@ -64,3 +64,11 @@ li {
   white-space: nowrap;
   margin-left: 2em;
 }
+
+.project-list li {
+  margin-bottom: 15px;
+}
+
+.project-list a {
+  font-weight: bold;
+}
