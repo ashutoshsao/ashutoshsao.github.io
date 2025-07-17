@@ -1,5 +1,10 @@
 const blogs = [
   {
+    "title": "The Map That No Longer Leads Home: Breaking Free from Outdated Dreams",
+    "date": "Jul 17 2025",
+    "href": "blogs/The-Map-That-No-Longer-Leads-Home.html"
+  },
+  {
     "title": "Installing Windows: A Complete Step-by-Step Guide",
     "date": "Jul 5 2025",
     "href": "blogs/installing-windows-step-by-step.html"
