@@ -1,5 +1,10 @@
 const blogs = [
   {
+    "title": "The Power Function: How Divide and Conquer Makes Math Lightning Fast ⚡",
+    "date": "Aug 04 2025",
+    "href": "blogs/the-power-function-divide-and-conquer.html"
+  },
+  {
     "title": "The Map That No Longer Leads Home: Breaking Free from Outdated Dreams",
     "date": "Jul 17 2025",
     "href": "blogs/The-Map-That-No-Longer-Leads-Home.html"
